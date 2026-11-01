@@ -21,8 +21,14 @@ export default function ProjectDetail() {
   return (
     <div className="card">
       <h2>{project.title}</h2>
+      <div style={{ margin: "8px 0 12px" }}>
+        <span className={`status-pill ${project.status === "OPEN_TEAM" ? "team" : "mentor"}`}>
+          <span className="dot" />
+          {project.status === "OPEN_TEAM" ? "Ekip Arkadaşı Aranıyor" : "Mentör Aranıyor"}
+        </span>
+      </div>
       <p>{project.description}</p>
-      <p className="muted">Durum: <span className="badge accent">{project.status}</span> · Kategori: {project.category}</p>
+      <p className="muted">Kategori: {project.category}</p>
       <p className="muted">Sahip: {project.owner?.name}</p>
       <textarea placeholder="Mesaj (opsiyonel)" value={msg} onChange={(e) => setMsg(e.target.value)} />
       <div style={{ marginTop: 8, display: "flex", gap: 8, flexWrap: "wrap" }}>

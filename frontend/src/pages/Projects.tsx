@@ -37,9 +37,14 @@ export default function Projects() {
       <div className="grid" style={{ marginTop: 16 }}>
         {projects.map((p) => (
           <div className="card project-card" key={p.id}>
-            <h3><Link to={`/projects/${p.id}`}>{p.title}</Link></h3>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8, flexWrap: "wrap", gap: 8 }}>
+              <h3 style={{ margin: 0 }}><Link to={`/projects/${p.id}`}>{p.title}</Link></h3>
+              <span className={`status-pill ${p.status === "OPEN_TEAM" ? "team" : "mentor"}`}>
+                <span className="dot" />
+                {p.status === "OPEN_TEAM" ? "Ekip Arkadaşı Aranıyor" : "Mentör Aranıyor"}
+              </span>
+            </div>
             <p className="muted" style={{ margin: "0 0 8px" }}>{p.description?.slice(0, 100)}</p>
-            <span className="badge accent">{p.status}</span>
             <span className="badge" style={{ marginLeft: 6 }}>{p.category}</span>
           </div>
         ))}

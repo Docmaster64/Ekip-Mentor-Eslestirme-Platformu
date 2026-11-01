@@ -338,3 +338,20 @@ li { padding: 8px 0; }
 
 code { font-family: "JetBrains Mono", "Fira Code", monospace; font-size: 13px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; }
 
+/* Status-specific badges */
+.badge.team { background: rgba(59, 130, 246, 0.18); color: #60a5fa; border-color: rgba(59,130,246,0.35); }
+.badge.mentor { background: rgba(168, 85, 247, 0.18); color: #c084fc; border-color: rgba(168,85,247,0.35); }
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.status-pill.team { background: rgba(59,130,246,0.18); color: #60a5fa; border: 1px solid rgba(59,130,246,0.35); }
+.status-pill.mentor { background: rgba(168,85,247,0.18); color: #c084fc; border: 1px solid rgba(168,85,247,0.35); }
+.status-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 1.8s infinite; }
+
