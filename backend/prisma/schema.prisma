@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  FACULTY
+  ADMIN
+}
+
+enum ProjectStatus {
+  OPEN_TEAM       // ekip arkadaşı aranıyor
+  OPEN_MENTOR     // mentör aranıyor
+  CLOSED
+}
+
+enum RequestType {
+  JOIN            // öğrenci katılma isteği
+  MENTOR          // hocanın mentörlük teklifi
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  password     String
+  name         String
+  role         Role      @default(STUDENT)
+  skills       String[]  // öğrenci yetenekleri
+  interests    String[]  // hoca ilgi alanları
+  projects     Project[] @relation("OwnerProjects")
+  requestsSent Request[] @relation("SentRequests")
+  requestsRecv Request[] @relation("ReceivedRequests")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Project {
+  id          String         @id @default(cuid())
+  title       String
+  description String
+  category    String
+  keywords    String[]
+  status      ProjectStatus  @default(OPEN_TEAM)
+  coverImage  String?
+  pdfUrl      String?
+  ownerId     String
+  owner       User           @relation("OwnerProjects", fields: [ownerId], references: [id])
+  requests    Request[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model Request {
+  id          String        @id @default(cuid())
+  type        RequestType
+  status      RequestStatus @default(PENDING)
+  message     String?
+  projectId   String
+  project     Project       @relation(fields: [projectId], references: [id])
+  senderId    String
+  sender      User          @relation("SentRequests", fields: [senderId], references: [id])
+  receiverId  String
+  receiver    User          @relation("ReceivedRequests", fields: [receiverId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
