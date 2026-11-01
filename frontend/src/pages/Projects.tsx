@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api";
+import { MOCK_PROJECTS } from "../mockData";
 
 export default function Projects() {
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any[]>(MOCK_PROJECTS);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
   const load = async () => {
     const q = new URLSearchParams();
     if (keyword) q.set("keyword", keyword);
     if (status) q.set("status", status);
-    try { setProjects(await api(`/api/projects?${q.toString()}`)); } catch { setProjects([]); }
+    try {
+      const data = await api(`/api/projects?${q.toString()}`);
+      setProjects(Array.isArray(data) && data.length ? data : MOCK_PROJECTS);
+    } catch {
+      let filtered = MOCK_PROJECTS;
+      if (keyword) filtered = filtered.filter((p) => p.title.toLowerCase().includes(keyword.toLowerCase()) || p.description.toLowerCase().includes(keyword.toLowerCase()));
+      if (status) filtered = filtered.filter((p) => p.status === status);
+      setProjects(filtered);
+    }
   };
   useEffect(() => { load(); }, []);
   return (
