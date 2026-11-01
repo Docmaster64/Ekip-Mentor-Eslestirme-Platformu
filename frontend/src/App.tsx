@@ -11,6 +11,7 @@ export default function App() {
   return (
     <div>
       <nav>
+        <span className="brand">Ekip & Mentör</span>
         <Link to="/">Ana Sayfa</Link>
         <Link to="/projects">Projeler</Link>
         <Link to="/inbox">Gelen İstekler</Link>

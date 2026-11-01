@@ -16,9 +16,9 @@ export default function Projects() {
   return (
     <div>
       <h2>Projeler</h2>
-      <div className="card" style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-        <input placeholder="Anahtar kelime" value={keyword} onChange={(e) => setKeyword(e.target.value)} style={{ flex: 1, minWidth: 160 }} />
-        <select value={status} onChange={(e) => setStatus(e.target.value)} style={{ width: 200 }}>
+      <div className="filter-bar">
+        <input placeholder="Anahtar kelime" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">Tümü</option>
           <option value="OPEN_TEAM">Ekip arkadaşı aranıyor</option>
           <option value="OPEN_MENTOR">Mentör aranıyor</option>
@@ -27,10 +27,10 @@ export default function Projects() {
       </div>
       <div className="grid" style={{ marginTop: 16 }}>
         {projects.map((p) => (
-          <div className="card" key={p.id}>
-            <h3 style={{ margin: "0 0 8px" }}><Link to={`/projects/${p.id}`}>{p.title}</Link></h3>
+          <div className="card project-card" key={p.id}>
+            <h3><Link to={`/projects/${p.id}`}>{p.title}</Link></h3>
             <p className="muted" style={{ margin: "0 0 8px" }}>{p.description?.slice(0, 100)}</p>
-            <span className="badge">{p.status}</span>
+            <span className="badge accent">{p.status}</span>
             <span className="badge" style={{ marginLeft: 6 }}>{p.category}</span>
           </div>
         ))}
