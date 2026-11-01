@@ -15,17 +15,19 @@ export default function Register() {
     } catch (e: any) { setErr(e.message); }
   };
   return (
-    <form onSubmit={submit} style={{ padding: 24, maxWidth: 360 }}>
+    <div className="card form">
       <h2>Kayıt</h2>
-      <input placeholder="Ad Soyad" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={{ display: "block", width: "100%", margin: "8px 0" }} />
-      <input placeholder="E-posta" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} style={{ display: "block", width: "100%", margin: "8px 0" }} />
-      <input type="password" placeholder="Şifre" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} style={{ display: "block", width: "100%", margin: "8px 0" }} />
-      <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} style={{ display: "block", width: "100%", margin: "8px 0" }}>
-        <option value="STUDENT">Öğrenci</option>
-        <option value="FACULTY">Hoca</option>
-      </select>
-      <button type="submit">Kayıt Ol</button>
-      {err && <p style={{ color: "red" }}>{err}</p>}
-    </form>
+      <form onSubmit={submit}>
+        <input placeholder="Ad Soyad" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+        <input placeholder="E-posta" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+        <input type="password" placeholder="Şifre" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
+          <option value="STUDENT">Öğrenci</option>
+          <option value="FACULTY">Hoca</option>
+        </select>
+        <button type="submit">Kayıt Ol</button>
+        {err && <p style={{ color: "#f87171" }}>{err}</p>}
+      </form>
+    </div>
   );
 }

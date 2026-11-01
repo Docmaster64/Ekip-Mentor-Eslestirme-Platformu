@@ -10,26 +10,32 @@ export default function Projects() {
     const q = new URLSearchParams();
     if (keyword) q.set("keyword", keyword);
     if (status) q.set("status", status);
-    setProjects(await api(`/api/projects?${q.toString()}`));
+    try { setProjects(await api(`/api/projects?${q.toString()}`)); } catch { setProjects([]); }
   };
   useEffect(() => { load(); }, []);
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <h2>Projeler</h2>
-      <div style={{ marginBottom: 12 }}>
-        <input placeholder="Anahtar kelime" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-        <select value={status} onChange={(e) => setStatus(e.target.value)} style={{ marginLeft: 8 }}>
+      <div className="card" style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        <input placeholder="Anahtar kelime" value={keyword} onChange={(e) => setKeyword(e.target.value)} style={{ flex: 1, minWidth: 160 }} />
+        <select value={status} onChange={(e) => setStatus(e.target.value)} style={{ width: 200 }}>
           <option value="">Tümü</option>
           <option value="OPEN_TEAM">Ekip arkadaşı aranıyor</option>
           <option value="OPEN_MENTOR">Mentör aranıyor</option>
         </select>
-        <button onClick={load} style={{ marginLeft: 8 }}>Filtrele</button>
+        <button onClick={load}>Filtrele</button>
       </div>
-      <ul>
+      <div className="grid" style={{ marginTop: 16 }}>
         {projects.map((p) => (
-          <li key={p.id}><Link to={`/projects/${p.id}`}>{p.title}</Link> — {p.status} ({p.category})</li>
+          <div className="card" key={p.id}>
+            <h3 style={{ margin: "0 0 8px" }}><Link to={`/projects/${p.id}`}>{p.title}</Link></h3>
+            <p className="muted" style={{ margin: "0 0 8px" }}>{p.description?.slice(0, 100)}</p>
+            <span className="badge">{p.status}</span>
+            <span className="badge" style={{ marginLeft: 6 }}>{p.category}</span>
+          </div>
         ))}
-      </ul>
+      </div>
+      {projects.length === 0 && <p className="muted">Henüz proje yok. Giriş yapıp yeni proje ekleyebilirsin.</p>}
     </div>
   );
 }

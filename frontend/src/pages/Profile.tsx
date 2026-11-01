@@ -15,16 +15,16 @@ export default function Profile() {
     }).catch(() => {});
   }, []);
   const save = async () => {
-    await api("/api/auth/me", { method: "PUT", body: JSON.stringify({ name, skills: skills.split(",").map((s) => s.trim()).filter(Boolean), interests: interests.split(",").map((s) => s.trim()).filter(Boolean) }) });
-    alert("Kaydedildi");
+    try { await api("/api/auth/me", { method: "PUT", body: JSON.stringify({ name, skills: skills.split(",").map((s) => s.trim()).filter(Boolean), interests: interests.split(",").map((s) => s.trim()).filter(Boolean) }) }); alert("Kaydedildi"); }
+    catch (e: any) { alert(e.message); }
   };
   return (
-    <div style={{ padding: 24, maxWidth: 480 }}>
+    <div className="card" style={{ maxWidth: 480 }}>
       <h2>Profil</h2>
-      <p>Rol: {user?.role}</p>
-      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Ad Soyad" style={{ display: "block", width: "100%", margin: "8px 0" }} />
-      <input value={skills} onChange={(e) => setSkills(e.target.value)} placeholder="Yetenekler (virgülle)" style={{ display: "block", width: "100%", margin: "8px 0" }} />
-      <input value={interests} onChange={(e) => setInterests(e.target.value)} placeholder="İlgi alanları (virgülle)" style={{ display: "block", width: "100%", margin: "8px 0" }} />
+      <p className="muted">Rol: {user?.role || "-"}</p>
+      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Ad Soyad" />
+      <input value={skills} onChange={(e) => setSkills(e.target.value)} placeholder="Yetenekler (virgülle)" />
+      <input value={interests} onChange={(e) => setInterests(e.target.value)} placeholder="İlgi alanları (virgülle)" />
       <button onClick={save}>Kaydet</button>
     </div>
   );

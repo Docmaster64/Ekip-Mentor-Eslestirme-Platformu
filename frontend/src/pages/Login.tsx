@@ -16,12 +16,14 @@ export default function Login() {
     } catch (e: any) { setErr(e.message); }
   };
   return (
-    <form onSubmit={submit} style={{ padding: 24, maxWidth: 360 }}>
+    <div className="card form">
       <h2>Giriş</h2>
-      <input placeholder="E-posta" value={email} onChange={(e) => setEmail(e.target.value)} style={{ display: "block", width: "100%", margin: "8px 0" }} />
-      <input type="password" placeholder="Şifre" value={password} onChange={(e) => setPassword(e.target.value)} style={{ display: "block", width: "100%", margin: "8px 0" }} />
-      <button type="submit">Giriş Yap</button>
-      {err && <p style={{ color: "red" }}>{err}</p>}
-    </form>
+      <form onSubmit={submit}>
+        <input placeholder="E-posta" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Şifre" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button type="submit">Giriş Yap</button>
+        {err && <p style={{ color: "#f87171" }}>{err}</p>}
+      </form>
+    </div>
   );
 }

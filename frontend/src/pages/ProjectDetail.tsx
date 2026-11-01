@@ -6,22 +6,22 @@ export default function ProjectDetail() {
   const { id } = useParams();
   const [project, setProject] = useState<any>(null);
   const [msg, setMsg] = useState("");
-  useEffect(() => { api(`/api/projects/${id}`).then(setProject); }, [id]);
+  useEffect(() => { api(`/api/projects/${id}`).then(setProject).catch(() => {}); }, [id]);
   const sendRequest = async (type: string) => {
-    await api("/api/requests", { method: "POST", body: JSON.stringify({ projectId: id, type, message: msg }) });
-    alert("İstek gönderildi");
+    try { await api("/api/requests", { method: "POST", body: JSON.stringify({ projectId: id, type, message: msg }) }); alert("İstek gönderildi"); }
+    catch (e: any) { alert(e.message); }
   };
-  if (!project) return <div style={{ padding: 24 }}>Yükleniyor...</div>;
+  if (!project) return <div className="card">Yükleniyor...</div>;
   return (
-    <div style={{ padding: 24 }}>
+    <div className="card">
       <h2>{project.title}</h2>
       <p>{project.description}</p>
-      <p>Durum: {project.status} | Kategori: {project.category}</p>
-      <p>Sahip: {project.owner?.name}</p>
-      <textarea placeholder="Mesaj" value={msg} onChange={(e) => setMsg(e.target.value)} style={{ width: "100%", height: 80 }} />
-      <div style={{ marginTop: 8 }}>
-        <button onClick={() => sendRequest("JOIN")} style={{ marginRight: 8 }}>Katılma İsteği Gönder</button>
-        <button onClick={() => sendRequest("MENTOR")}>Mentörlük Teklifi Gönder</button>
+      <p className="muted">Durum: <span className="badge">{project.status}</span> · Kategori: {project.category}</p>
+      <p className="muted">Sahip: {project.owner?.name}</p>
+      <textarea placeholder="Mesaj (opsiyonel)" value={msg} onChange={(e) => setMsg(e.target.value)} />
+      <div style={{ marginTop: 8, display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <button onClick={() => sendRequest("JOIN")}>Katılma İsteği Gönder</button>
+        <button className="secondary" onClick={() => sendRequest("MENTOR")}>Mentörlük Teklifi Gönder</button>
       </div>
     </div>
   );
