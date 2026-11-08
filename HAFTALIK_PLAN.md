@@ -38,7 +38,8 @@
 |-------|-----------|--------------|---------|--------------|
 | **~~4~~** | ~~Backend CRUD + Dosya yükleme~~ | ~~Proje ekle/düzenle/sil endpoint'leri, Prisma seed verileri, Cloudinary entegrasyonu (kapak görseli + PDF)~~ | ~~Backend~~ | ~~API test edildi (Postman/İstek)~~ |
 | **4** | ✅ **Tamamlandı — Backend CRUD + Rol yetkisi + Socket.IO bildirim** | Proje ekle/düzenle/sil endpoint'leri, `requireRole` yetkisi (STUDENT/FACULTY/ADMIN), Socket.IO `newRequest` / `requestUpdated` eventi, Cloudinary URL alanı (coverImage, pdfUrl) | Backend + Frontend | ✅ Test edilebilir |
-| **5** | Frontend proje akışı | Yeni proje oluşturma / düzenleme sayfası, fotoğraf & PDF yükleme UI, proje detay sayfası | Frontend | Sayfalar canlı |
+| **~~5~~** | ~~Frontend proje akışı~~ | ~~Yeni proje oluşturma / düzenleme sayfası, fotoğraf & PDF yükleme UI, proje detay sayfası~~ | ~~Frontend~~ | ~~Sayfalar canlı~~ |
+| **5** | ✅ **Tamamlandı — Gerçek API bağlantısı + proje detay/PDF + profil projeleri** | Mock fallback kaldırma (`Projects.tsx`, `ProjectDetail.tsx`), `ProjectDetail`’de `coverImage` / `pdfUrl` görüntüleme, `Profile`’de “Projelerim” bölümü, İP4 eşleştirme akışının frontende entegrasyonu | Frontend | API’ye bağlandı |
 | **6** | İstek / teklif akışı + Bildirim | Katılma isteği ve mentörlük teklifi gönderme, Socket.IO gerçek zamanlı bildirim, `Inbox` güncelleme | İki taraf | Gerçek zamanlı bildirim çalışıyor |
 | **7** | Rol tabanlı erişim | Korumalı rotalar, rol bazlı menü/ekranlar (öğrenci / hoca / yönetici), auth middleware'i | İki taraf | Rol bazlı erişim testi |
 | **8** | Yönetici paneli + Rapor | Admin dashboard, Recharts ile eşleşme sayıları ve mentörsüz proje grafikleri | Frontend | Admin panel canlı |
