@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
-import { AuthRequest } from "../middleware/auth";
+import { AuthRequest, requireRole } from "../middleware/auth";
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -20,7 +20,7 @@ router.get("/", async (req: AuthRequest, res) => {
   res.json(projects);
 });
 
-router.post("/", async (req: AuthRequest, res) => {
+router.post("/", requireRole("STUDENT", "FACULTY", "ADMIN"), async (req: AuthRequest, res) => {
   const { title, description, category, keywords, status, coverImage, pdfUrl } = req.body;
   if (!title || !description) return res.status(400).json({ error: "Başlık ve açıklama gerekli" });
   const project = await prisma.project.create({
@@ -42,7 +42,7 @@ router.get("/:id", async (req: AuthRequest, res) => {
   res.json(project);
 });
 
-router.put("/:id", async (req: AuthRequest, res) => {
+router.put("/:id", requireRole("STUDENT", "FACULTY", "ADMIN"), async (req: AuthRequest, res) => {
   const project = await prisma.project.findUnique({ where: { id: req.params.id } });
   if (!project) return res.status(404).json({ error: "Proje bulunamadı" });
   if (project.ownerId !== req.user!.id && req.user!.role !== "ADMIN") {
@@ -52,7 +52,7 @@ router.put("/:id", async (req: AuthRequest, res) => {
   res.json(updated);
 });
 
-router.delete("/:id", async (req: AuthRequest, res) => {
+router.delete("/:id", requireRole("STUDENT", "FACULTY", "ADMIN"), async (req: AuthRequest, res) => {
   const project = await prisma.project.findUnique({ where: { id: req.params.id } });
   if (!project) return res.status(404).json({ error: "Proje bulunamadı" });
   if (project.ownerId !== req.user!.id && req.user!.role !== "ADMIN") {
