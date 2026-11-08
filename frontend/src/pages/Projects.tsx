@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api";
-import { MOCK_PROJECTS } from "../mockData";
 
 export default function Projects() {
-  const [projects, setProjects] = useState<any[]>(MOCK_PROJECTS);
+  const [projects, setProjects] = useState<any[]>([]);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
   const load = async () => {
@@ -13,12 +12,9 @@ export default function Projects() {
     if (status) q.set("status", status);
     try {
       const data = await api(`/api/projects?${q.toString()}`);
-      setProjects(Array.isArray(data) && data.length ? data : MOCK_PROJECTS);
+      setProjects(Array.isArray(data) ? data : []);
     } catch {
-      let filtered = MOCK_PROJECTS;
-      if (keyword) filtered = filtered.filter((p) => p.title.toLowerCase().includes(keyword.toLowerCase()) || p.description.toLowerCase().includes(keyword.toLowerCase()));
-      if (status) filtered = filtered.filter((p) => p.status === status);
-      setProjects(filtered);
+      setProjects([]);
     }
   };
   useEffect(() => { load(); }, []);
