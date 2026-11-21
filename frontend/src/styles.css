@@ -355,3 +355,71 @@ code { font-family: "JetBrains Mono", "Fira Code", monospace; font-size: 13px; b
 .status-pill.mentor { background: rgba(168,85,247,0.18); color: #c084fc; border: 1px solid rgba(168,85,247,0.35); }
 .status-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 1.8s infinite; }
 
+
+/* Toast bildirim stilleri */
+.toast-container {
+  position: fixed;
+  top: 76px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 380px;
+  width: calc(100% - 40px);
+  pointer-events: none;
+}
+.toast-card {
+  pointer-events: auto;
+  background: rgba(20, 27, 45, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  animation: slideInRight 0.3s ease-out;
+  color: var(--text);
+}
+.toast-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.toast-close {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+.toast-close:hover { color: var(--text); }
+.toast-message {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.4;
+}
+.toast-info { border-left: 4px solid #3b82f6; }
+.toast-success { border-left: 4px solid var(--success); }
+.toast-warning { border-left: 4px solid var(--accent); }
+.toast-danger { border-left: 4px solid var(--danger); }
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.nav-badge {
+  background: var(--danger);
+  color: white;
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 4px;
+  vertical-align: middle;
+}
