@@ -41,7 +41,7 @@
 | **~~5~~** | ~~Frontend proje akışı~~ | ~~Yeni proje oluşturma / düzenleme sayfası, fotoğraf & PDF yükleme UI, proje detay sayfası~~ | ~~Frontend~~ | ~~Sayfalar canlı~~ |
 | **5** | ✅ **Tamamlandı — Gerçek API bağlantısı + proje detay/PDF + profil projeleri** | Mock fallback kaldırma (`Projects.tsx`, `ProjectDetail.tsx`), `ProjectDetail`’de `coverImage` / `pdfUrl` görüntüleme, `Profile`’de “Projelerim” bölümü, İP4 eşleştirme akışının frontende entegrasyonu | Frontend | API’ye bağlandı |
 | **6** | ✅ **Tamamlandı — İstek / teklif akışı + Socket.IO bildirim** | Katılma isteği ve mentörlük teklifi gönderme, Socket.IO gerçek zamanlı bildirim (Toast + canlı Inbox), istek kabul / ret akışı | İki taraf | ✅ Canlı bildirim test edildi |
-| **7** | Rol tabanlı erişim | Korumalı rotalar, rol bazlı menü/ekranlar (öğrenci / hoca / yönetici), auth middleware'i | İki taraf | Rol bazlı erişim testi |
+| **7** | ✅ **Tamamlandı — Rol tabanlı erişim ve dinamik yetki denetimi** | Korumalı rotalar (ProtectedRoute), role göre dinamik butonlar (öğrenci katılma / hoca mentörlük), proje sahibi aksiyonları | İki taraf | ✅ Rol bazlı erişim testi başarılı |
 | **8** | Yönetici paneli + Rapor | Admin dashboard, Recharts ile eşleşme sayıları ve mentörsüz proje grafikleri | Frontend | Admin panel canlı |
 | **9** | Test + Polish | Uçtan uca test (kayıt → proje → istek → kabul), hata düzeltmeleri, responsive UI, mock verilerinden gerçek DB'ye geçiş | İki taraf | Kararlı sürüm |
 | **10** | Final teslim | `README.md` güncelleme, sunum/demo hazırlığı, kod temizleme, final commit | İki taraf | Teslim edildi |
@@ -77,6 +77,19 @@
 - `frontend/src/pages/Inbox.tsx`: Gelen isteklerin Socket.IO üzerinden anlık güncellenmesi, durum rozetleri ve kabul/ret aksiyonları.
 - `frontend/src/pages/ProjectDetail.tsx`: Katılma isteği ve mentörlük teklifi gönderimi sonrası canlı bildirim geri bildirimi.
 - `frontend/src/App.tsx`: Menüde gelen istek sayacı (`nav-badge`) ve ToastProvider sarmalaması.
+
+---
+
+## ✅ 7. Hafta — Yapılanlar (Tamamlandı)
+
+### Rol Tabanlı Erişim & Güvenlik
+- `frontend/src/components/ProtectedRoute.tsx`: Yetkisiz ziyaretçilerin oturum açmasını zorunlu kılan ve roller bazında kısıtlama getiren korumalı rota bileşeni.
+- `frontend/src/App.tsx`: `/projects/create`, `/inbox` ve `/profile` rotaları koruma altına alındı.
+- `frontend/src/pages/ProjectDetail.tsx`: 
+  - Öğrenci rolündeki kullanıcılara yalnızca "Katılma İsteği Gönder (Öğrenci)" butonu gösteriliyor.
+  - Hoca rolündeki kullanıcılara yalnızca "Mentörlük Teklifi Gönder (Hoca)" butonu gösteriliyor.
+  - Proje sahibine kendi projesine istek atma butonları gizlenip "Proje Sahibisiniz" rozeti, durum değiştirme ve silme aksiyonları eklendi.
+  - Giriş yapmamış kullanıcılara "Giriş Yap" yönlendirmesi sağlandı.
 
 ---
 
