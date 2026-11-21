@@ -8,6 +8,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Profile from "./pages/Profile";
 import Inbox from "./pages/Inbox";
 import ProjectCreate from "./pages/ProjectCreate";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { getToken } from "./api";
 import { ToastProvider, useToast } from "./components/Toast";
 
@@ -72,10 +73,31 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/create" element={<ProjectCreate />} />
+            <Route
+              path="/projects/create"
+              element={
+                <ProtectedRoute allowedRoles={["STUDENT", "FACULTY"]}>
+                  <ProjectCreate />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/projects/:id" element={<ProjectDetail />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/inbox" element={<Inbox />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/inbox"
+              element={
+                <ProtectedRoute>
+                  <Inbox />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </div>
